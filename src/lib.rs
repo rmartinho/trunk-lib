@@ -24,9 +24,7 @@ use std::path::PathBuf;
 use std::process::ExitCode;
 use tracing_subscriber::prelude::*;
 
-#[tokio::main]
-async fn main() -> Result<ExitCode> {
-    let cli = Trunk::parse();
+pub async fn go(cli: Trunk) -> Result<ExitCode> {
 
     let colored = init_color(&cli);
 
@@ -112,7 +110,7 @@ fn eval_logging(cli: &Trunk) -> tracing_subscriber::EnvFilter {
 /// Build, bundle & ship your Rust WASM application to the web.
 #[derive(Parser)]
 #[command(about, author, version)]
-struct Trunk {
+pub struct Trunk {
     #[command(subcommand)]
     action: TrunkSubcommands,
     /// Path to the Trunk config file
@@ -159,7 +157,7 @@ impl Trunk {
 
 #[derive(Clone, Debug, Default, ValueEnum)]
 #[value(rename_all = "lower")]
-enum ColorMode {
+pub enum ColorMode {
     /// Enable color when running on a TTY
     #[default]
     Auto,
@@ -187,7 +185,7 @@ impl Trunk {
 
 #[allow(clippy::large_enum_variant)]
 #[derive(Subcommand)]
-enum TrunkSubcommands {
+pub enum TrunkSubcommands {
     /// Build the Rust WASM app and all of its assets.
     Build(cmd::build::Build),
     /// Build & watch the Rust WASM app and all of its assets.
