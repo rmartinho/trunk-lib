@@ -3,7 +3,7 @@ use clap::Args;
 use semver::VersionReq;
 
 /// Core options
-#[derive(Clone, Debug, Args)]
+#[derive(Clone, Debug, Default, Args)]
 #[command(next_help_heading = "Core")]
 pub struct Core {
     /// Override the required trunk version

@@ -12,7 +12,7 @@ use clap::Args;
 use std::{path::PathBuf, sync::Arc};
 
 /// Build the Rust WASM app and all of its assets.
-#[derive(Clone, Debug, Args)]
+#[derive(Clone, Debug, Default, Args)]
 #[command(name = "build")]
 #[command(next_help_heading = "Build")]
 pub struct Build {

@@ -2,7 +2,7 @@
 #![deny(clippy::unwrap_used)]
 
 mod build;
-mod cmd;
+pub mod cmd;
 mod common;
 mod config;
 mod hooks;
@@ -108,11 +108,11 @@ fn eval_logging(cli: &Trunk) -> tracing_subscriber::EnvFilter {
 }
 
 /// Build, bundle & ship your Rust WASM application to the web.
-#[derive(Parser)]
+#[derive(Parser, Default)]
 #[command(about, author, version)]
 pub struct Trunk {
     #[command(subcommand)]
-    action: TrunkSubcommands,
+    pub action: TrunkSubcommands,
     /// Path to the Trunk config file
     #[arg(long, env = "TRUNK_CONFIG", global(true))]
     pub config: Option<PathBuf>,
@@ -198,6 +198,12 @@ pub enum TrunkSubcommands {
     Config(cmd::config::Config),
     /// Working with tools
     Tools(cmd::tools::Tools),
+}
+
+impl Default for TrunkSubcommands {
+    fn default() -> Self {
+        Self::Build(Default::default())
+    }
 }
 
 #[cfg(test)]
